@@ -1,0 +1,83 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
+android {
+    namespace 'com.example.myapplication'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdk 28
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    // ✅ BuildConfig 생성 켜기 (에러 메시지 지시문), ViewBinding 켜기
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+        compose true        // compose 빌드
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.14' //Compose Compiler (Kotlin 1.9.24 호환)
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildTypes {
+        debug {
+            // ✅ 빌드타입별 BASE_URL 분리
+            buildConfigField "String", "AI_BASE_URL", "\"http://127.0.0.1:8000/\""   // FastAPI
+            buildConfigField "String", "API_BASE_URL","\"http://127.0.0.1:8000/\""   // Spring Boot
+            // 디버그는 보통 HTTP 허용 (network_security_config 필요)
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 배포용은 HTTPS 권장 (게이트웨이/도메인으로 교체)
+            buildConfigField "String", "AI_BASE_URL", "\"https://ai.yourdomain.com/\""
+            buildConfigField "String", "API_BASE_URL","\"https://api.yourdomain.com/\""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    implementation libs.core.ktx
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    // ✅ RetrofitOkHttp (Version Catalog에 없으면 아래 좌표 직접 추가)
+    implementation "com.squareup.retrofit2:retrofit:2.11.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.11.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
+
+    // Compose BOM으로 버전 정렬
+    implementation platform(libs.compose.bom)
+
+    // Compose UI / Material3
+    implementation libs.compose.ui
+    implementation libs.compose.material3
+}

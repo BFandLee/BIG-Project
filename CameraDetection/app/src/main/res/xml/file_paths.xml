@@ -1,0 +1,5 @@
+<!-- res/xml/file_paths.xml -->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 캐시 디렉터리 하위 파일을 외부 앱(카메라)과 공유 -->
+    <cache-path name="images" path="images/"/>
+</paths>

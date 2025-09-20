@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 앱 전체 테마: AppCompatActivity와 100% 호환 -->
+    <style name="Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 필요하면 색상 커스터마이즈 -->
+        <!-- <item name="colorPrimary">@color/purple_500</item> -->
+    </style>
+</resources>
