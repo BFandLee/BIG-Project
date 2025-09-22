@@ -1,6 +1,8 @@
 // ui/detect/DetectActivity.java
 package com.example.myapplication.ui.detect;
 
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,10 +16,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.data.ai.AiRepository;
 import com.example.myapplication.data.ai.dto.DetectResponse;
 import com.example.myapplication.data.ai.dto.HealthResponse;
+import com.example.myapplication.data.api.ApiRepository;
+import com.example.myapplication.data.api.dto.RecipeDto;
+import com.example.myapplication.data.mapper.DtoMappers;
+import com.example.myapplication.domain.model.Recipe;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +40,7 @@ import retrofit2.Response;
 public class DetectActivity extends AppCompatActivity {
 
     private final AiRepository aiRepo = new AiRepository();
-
-    // (선택) 이 화면에서 직접 갤러리 띄우고 싶을 때만 사용
-    private ActivityResultLauncher<String> pick;
+    private final ApiRepository apiRepo = new ApiRepository();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,11 +58,7 @@ public class DetectActivity extends AppCompatActivity {
             }
         });
 
-        // 2) (선택) 이 화면에서 직접 갤러리 선택을 하고 싶다면 사용
-        pick = registerForActivityResult(
-                new ActivityResultContracts.GetContent(),
-                this::onPicked
-        );
+
         // 예) 버튼에서: findViewById(R.id.btnPick).setOnClickListener(v -> pick.launch("image/*"));
 
         // 3) MainActivity에서 넘어온 URI를 인텐트 data로 수신해 바로 처리
@@ -120,14 +122,43 @@ public class DetectActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Toast.makeText(DetectActivity.this,
-                        "ingredients: " + resp.body().ingredients,
-                        Toast.LENGTH_LONG).show();
+                List<String> detected = resp.body().ingredients != null
+                        ? resp.body().ingredients : new ArrayList<>();
+                Toast.makeText(DetectActivity.this, "detected=" + detected, Toast.LENGTH_SHORT).show();
                 // TODO: resp.body().detections로 UI 반영
+
+                // 3) SpringBoot /maindishes 받아서 필터/정렬
+                apiRepo.getMainDishes().enqueue(new Callback<List<RecipeDto>>() {
+                    @Override
+                    public void onResponse(Call<List<RecipeDto>> call, Response<List<RecipeDto>> resp2) {
+                        if (!resp2.isSuccessful() || resp2.body() == null) {
+                            Toast.makeText(DetectActivity.this, "maindishes 실패: " + resp2.code(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        List<Recipe> ranked = DtoMappers.filterAndRankByDetected(resp2.body(), detected);
+                        Toast.makeText(DetectActivity.this,
+                                "가능 요리 " + ranked.size() + "개 (상세 화면으로 넘기면 됨)", Toast.LENGTH_LONG).show();
+
+                        // Moshi로 List<Recipe> → JSON
+                        Moshi moshi = new Moshi.Builder().build();
+                        java.lang.reflect.Type listType = Types.newParameterizedType(List.class, Recipe.class);
+                        String json = moshi.adapter(listType).toJson(ranked);
+
+                        // 리스트 화면으로 이동
+                        Intent i = new Intent(DetectActivity.this, com.example.myapplication.ui.recipe.RecipeListActivity.class);
+                        i.putExtra("recipes_json", json);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<RecipeDto>> call, Throwable t) {
+                        Toast.makeText(DetectActivity.this, "maindishes 네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override public void onFailure(Call<DetectResponse> call, Throwable t) {
-                Toast.makeText(DetectActivity.this, "네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetectActivity.this, "detect 네트워크 오류: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

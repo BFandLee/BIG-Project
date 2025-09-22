@@ -8,5 +8,6 @@ package com.example.myapplication;
  */
 public final class AppConfig {
     private AppConfig() {}
-    public static final String AI_BASE_URL = BuildConfig.AI_BASE_URL;
+    public static final String AI_BASE_URL = BuildConfig.AI_BASE_URL;   // FastAPI
+    public static final String API_BASE_URL = BuildConfig.API_BASE_URL; // Spring Boot
 }

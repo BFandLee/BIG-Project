@@ -31,6 +31,9 @@
 
         <activity android:name=".ui.detect.DetectActivity"
             android:exported="false" />
+        <activity android:name="com.example.myapplication.ui.recipe.RecipeDetailActivity" />
+        <activity android:name="com.example.myapplication.ui.recipe.RecipeListActivity" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

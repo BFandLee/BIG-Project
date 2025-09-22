@@ -38,7 +38,7 @@ android {
         debug {
             // ✅ 빌드타입별 BASE_URL 분리
             buildConfigField "String", "AI_BASE_URL", "\"http://127.0.0.1:8000/\""   // FastAPI
-            buildConfigField "String", "API_BASE_URL","\"http://127.0.0.1:8000/\""   // Spring Boot
+            buildConfigField "String", "API_BASE_URL","\"http://127.0.0.1:8080/\""   // Spring Boot
             // 디버그는 보통 HTTP 허용 (network_security_config 필요)
         }
         release {
