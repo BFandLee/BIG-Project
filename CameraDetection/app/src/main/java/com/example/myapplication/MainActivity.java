@@ -20,6 +20,7 @@ import androidx.core.content.FileProvider;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.ui.viewmodel.FridgeViewModel;
+import com.example.myapplication.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -105,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
             binding.fridgeInside.setVisibility(
                     vis == View.GONE ? View.VISIBLE : View.GONE
             );
+        });
+        findViewById(R.id.btnOpenWeb).setOnClickListener(v -> {
+            Intent i = new Intent(this, com.example.myapplication.ui.web.WebViewActivity.class);
+            // 필요하다면 쿼리/파라미터 전달 가능: i.putExtra("path", "/recipes");
+            startActivity(i);
         });
     }
 

@@ -7,7 +7,7 @@ from PIL import Image
 import io
 
 # ===== 설정 =====
-WEIGHTS_PATH = "C:/Program Files/BIG-Project/yolo8_results/exp19/weights/best.pt"  # 너의 가중치 경로
+WEIGHTS_PATH = "D:/Program Files/BIG-Project/yolo8_results/exp19/weights/best.pt"  # 너의 가중치 경로
 CONF_TH = 0.60
 TARGET_CLASSES = {"egg", "meat"}  # 시연용 필터 (원하면 비워두면 전체 허용)
 

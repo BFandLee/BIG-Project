@@ -1,0 +1,120 @@
+/* src/components/Header.css */
+
+.header-body {
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+  padding: 0 20px;
+}
+
+.header-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 윗줄 스타일 */
+.header-top {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+  height: 30px;
+  align-items: center;
+}
+
+/* 아랫줄 스타일 */
+.header-bottom {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 50px;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+
+  /* ✨ 이 부분의 padding을 수정합니다. */
+  padding: 5px; /* 기존 여백 */
+  padding-left: 0; /* 왼쪽 여백만 제거 */
+}
+
+/* 중앙 검색창 영역 */
+.header-center {
+  flex-grow: 1;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  max-width: 500px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.search-bar .search-icon {
+  display: flex;
+  align-items: center;
+  color: #888;
+}
+
+.search-bar input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1rem;
+}
+
+/* 오른쪽 프로필 영역 */
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.user-profile span {
+  font-size: 0.8rem;
+  color: #333;
+}
+
+.login-button-header {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.login-button-header:hover {
+  text-decoration: underline;
+}
+
+.logout-button {
+  background: none;
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  color: #555;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #dc3545;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logout-button:hover {
+  background-color: #f0f0f0;
+}

@@ -33,6 +33,7 @@
             android:exported="false" />
         <activity android:name="com.example.myapplication.ui.recipe.RecipeDetailActivity" />
         <activity android:name="com.example.myapplication.ui.recipe.RecipeListActivity" />
+        <activity android:name="com.example.myapplication.ui.web.WebViewActivity" />
 
         <activity
             android:name=".MainActivity"
