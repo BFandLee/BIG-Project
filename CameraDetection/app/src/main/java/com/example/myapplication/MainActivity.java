@@ -87,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
             viewModel.toggleTop();
         });
 
+        binding.topDoor.setOnClickListener(v -> {
+            Toast.makeText(this, "웹 열기", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, com.example.myapplication.ui.web.WebViewActivity.class));
+        });
+
         // 중앙 냉장고(중문) 이미지 클릭 → “카메라/갤러리” 선택 다이얼로그
         binding.middleDoor.setOnClickListener(v -> showPickDialog());
 
@@ -107,11 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     vis == View.GONE ? View.VISIBLE : View.GONE
             );
         });
-        findViewById(R.id.btnOpenWeb).setOnClickListener(v -> {
-            Intent i = new Intent(this, com.example.myapplication.ui.web.WebViewActivity.class);
-            // 필요하다면 쿼리/파라미터 전달 가능: i.putExtra("path", "/recipes");
-            startActivity(i);
-        });
+
     }
 
     /** null-safe Boolean */
