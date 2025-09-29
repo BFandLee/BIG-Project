@@ -9,17 +9,6 @@
     android:background="@drawable/fridge_background"> <!-- 전체 냉장고 외관 -->
 
     <!-- 상단칸 -->
-    <Button
-        android:id="@+id/btnOpenWeb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="웹으로 보기"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- 중단칸 -->
     <View
         android:id="@+id/topDoor"
         android:layout_width="0dp"
@@ -31,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- 중단칸 -->
     <View
         android:id="@+id/middleDoor"
         android:layout_width="0dp"
@@ -61,4 +51,32 @@
         android:src="@drawable/fridge_inside"
         android:visibility="gone"
         android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/insideText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="웹으로 열기"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:background="#80000000"
+        app:layout_constraintTop_toTopOf="@id/fridgeInside"
+        app:layout_constraintStart_toStartOf="@id/fridgeInside"
+        app:layout_constraintEnd_toEndOf="@id/fridgeInside"
+        app:layout_constraintBottom_toBottomOf="@id/fridgeInside"
+        app:layout_constraintVertical_bias="0.11" />
+
+    <TextView
+        android:id="@+id/insideText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="요리 보기"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:background="#80000000"
+        app:layout_constraintTop_toTopOf="@id/fridgeInside"
+        app:layout_constraintStart_toStartOf="@id/fridgeInside"
+        app:layout_constraintEnd_toEndOf="@id/fridgeInside"
+        app:layout_constraintBottom_toBottomOf="@id/fridgeInside"
+        app:layout_constraintVertical_bias="0.45" />
 </androidx.constraintlayout.widget.ConstraintLayout>
